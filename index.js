@@ -47,9 +47,9 @@ const validateCode = async (code) => {
       res.on('end', () => {
         const responseBody = JSON.parse(body);
         if (res.statusCode === 200) {
-          resolve({ success: true, message: 'Code is valid' });
+          resolve({ success: true, message: responseBody });
         } else {
-          resolve({ success: false, message: 'Code is invalid' });
+          resolve({ success: false, message: responseBody });
         }
       });
     });
