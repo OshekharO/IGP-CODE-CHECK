@@ -1,11 +1,10 @@
 const https = require('https');
-//const cors = require('cors');
 
 const codes = [
   'IGPSELECT022453',
   'IGPSELECT033693',
-  'IGPSELECT000634',
-  'IGPSELECT025247'
+  'IGPSELECT000924',
+  'IGPSELECT025737'
 ];
 
 const requestHeaders = {
@@ -40,16 +39,16 @@ codes.forEach((code) => {
 
   const req = https.request(options, (res) => {
     console.log(`statusCode: ${res.statusCode}`);
-    console.log(`headers: ${JSON.stringify(res.headers)}`);
+    //console.log(`headers: ${JSON.stringify(res.headers)}`);
 
     let body = '';
     res.on('data', (chunk) => {
       body += chunk;
     });
 
-   // res.on('end', () => {
-      //console.log(`body: ${body}`);
-   // });
+    res.on('end', () => {
+      console.log(`body: ${body}`);
+    });
 
     res.on('error', (err) => {
       console.error(err);
