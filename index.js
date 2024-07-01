@@ -46,11 +46,7 @@ const validateCode = async (code) => {
 
       res.on('end', () => {
         const responseBody = JSON.parse(body);
-        if (res.statusCode === 200) {
-          resolve({ success: true, message: responseBody });
-        } else {
-          resolve({ success: false, message: responseBody });
-        }
+        resolve(responseBody);
       });
     });
 
@@ -64,8 +60,8 @@ const validateCode = async (code) => {
 };
 
 codes.forEach((code) => {
-  validateCode(code).then((result) => {
-    console.log(`Code ${code} is ${result.success ? 'valid' : 'invalid'}`);
+  validateCode(code).then((responseBody) => {
+    console.log(`Code ${code} response: ${JSON.stringify(responseBody)}`);
   }).catch((error) => {
     console.error(error);
   });
