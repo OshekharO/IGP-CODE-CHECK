@@ -67,7 +67,7 @@ const validateCode = async (code) => {
 
 codes.forEach((code) => {
   validateCode(code).then((responseBody) => {
-    console.log(`Code ${code} response: ${JSON.stringify(responseBody)}`);
+    console.log(`${code}: ${responseBody.message}`);
   }).catch((error) => {
     console.error(error);
   });
