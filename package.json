@@ -7,8 +7,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "fetch": "^node-fetch@^3.2.0"
+    "https": "^1.0.0",
   }
 }
   
