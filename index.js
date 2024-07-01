@@ -23,7 +23,7 @@ const requestHeaders = {
 
 const generateRandomCode = () => {
   const prefix = 'IGPSELECT00';
-  const suffix = Math.floor(Math.random() * 1000000).toString().padStart(4, '0');
+  const suffix = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
   return `${prefix}${suffix}`;
 };
 
