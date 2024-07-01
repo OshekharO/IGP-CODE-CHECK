@@ -1,11 +1,7 @@
-const https = require('https');
-
-const codes = [
-  'IGPSELECT022453',
-  'IGPSELECT033693',
-  'IGPSELECT000924',
-  'IGPSELECT025737'
-];
+const express = require('express');
+const fetch = require('node-fetch');
+const app = express();
+const port = process.env.PORT || 3000; // Use environment variable for dynamic port
 
 const requestHeaders = {
   'host': 'www.igp.com',
@@ -29,40 +25,38 @@ const requestHeaders = {
 };
 
 const validateCode = async (code) => {
-  return new Promise((resolve, reject) => {
-    const requestBody = `voucherCode=${code}`;
-    const options = {
-      method: 'POST',
-      hostname: 'www.igp.com',
-      path: '/igpselect/buyMembershipByVoucher',
-      headers: requestHeaders
-    };
+  const requestBody = `voucherCode=${code}`;
+  const options = {
+    method: 'POST',
+    hostname: 'www.igp.com',
+    path: '/igpselect/buyMembershipByVoucher',
+    headers: requestHeaders,
+    body: requestBody,
+  };
 
-    const req = https.request(options, (res) => {
-      let body = '';
-      res.on('data', (chunk) => {
-        body += chunk;
-      });
-
-      res.on('end', () => {
-        const responseBody = JSON.parse(body);
-        resolve(responseBody);
-      });
-    });
-
-    req.write(requestBody);
-    req.end();
-
-    req.on('error', (err) => {
-      reject(err);
-    });
-  });
+  try {
+    const response = await fetch('https://www.igp.com/igpselect/buyMembershipByVoucher', options);
+    const responseBody = await response.json();
+    return responseBody;
+  } catch (error) {
+    throw error;
+  }
 };
 
-codes.forEach((code) => {
-  validateCode(code).then((responseBody) => {
-    console.log(`Code ${code} response: ${JSON.stringify(responseBody)}`);
-  }).catch((error) => {
+app.post('/api/validate-code', async (req, res) => {
+  const { code } = req.body;
+
+  if (!code) {
+    return res.status(400).json({ message: 'Please enter a voucher code.' });
+  }
+
+  try {
+    const responseBody = await validateCode(code);
+    res.json(responseBody);
+  } catch (error) {
     console.error(error);
-  });
+    res.status(500).json({ message: 'Error validating code. Please try again later.' });
+  }
 });
+
+app.listen(port, () => console.log(`Server listening on port ${port}`));
