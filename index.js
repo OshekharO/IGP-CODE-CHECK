@@ -65,10 +65,12 @@ const validateCode = async (code) => {
   });
 };
 
-codes.forEach((code) => {
-  validateCode(code).then((responseBody) => {
-    console.log(`${code}: ${responseBody.message}`);
-  }).catch((error) => {
-    console.error(error);
+export default async function handler(event) {
+  codes.forEach((code) => {
+    validateCode(code).then((responseBody) => {
+      console.log(`Code ${code} response: ${responseBody.message}`);
+    }).catch((error) => {
+      console.error(error);
+    });
   });
-});
+}
