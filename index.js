@@ -47,9 +47,9 @@ codes.forEach((code) => {
       body += chunk;
     });
 
-    res.on('end', () => {
-      console.log(`body: ${body}`);
-    });
+   // res.on('end', () => {
+      //console.log(`body: ${body}`);
+   // });
 
     res.on('error', (err) => {
       console.error(err);
