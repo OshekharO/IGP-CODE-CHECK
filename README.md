@@ -16,6 +16,8 @@ This function takes a list of voucher codes as input and makes a POST request to
 
 This function is designed to be used as a serverless function. You can deploy it to a cloud platform such as Vercel or AWS Lambda.
 
+Change the cookies present in index.js with your cookies.
+
 ## Contributing
 
 Contributions are welcome! If you'd like to contribute to this project, please open a pull request.
