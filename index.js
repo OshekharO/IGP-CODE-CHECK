@@ -29,7 +29,7 @@ const requestHeaders = {
 };
 
 const validateCode = async (code) => {
-  try {
+  return new Promise((resolve, reject) => {
     const requestBody = `voucherCode=${code}`;
     const options = {
       method: 'POST',
@@ -47,19 +47,20 @@ const validateCode = async (code) => {
       res.on('end', () => {
         const responseBody = JSON.parse(body);
         if (res.statusCode === 200) {
-          return { success: true, message: 'Code is valid' };
+          resolve({ success: true, message: 'Code is valid' });
         } else {
-          return { success: false, message: 'Code is invalid' };
+          resolve({ success: false, message: 'Code is invalid' });
         }
       });
     });
 
     req.write(requestBody);
     req.end();
-  } catch (error) {
-    console.error(error);
-    return { success: false, message: 'Error validating code' };
-  }
+
+    req.on('error', (err) => {
+      reject(err);
+    });
+  });
 };
 
 codes.forEach((code) => {
