@@ -1,13 +1,11 @@
 {
-  "name": "igp-voucher-check",
+  "name": "igp-codes",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "dev": "node index.js",
-    "start": "node index.js"
-  },
   "dependencies": {
     "https": "^1.0.0",
+    "cors": "^2.8.5"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
-  
